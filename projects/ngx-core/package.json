@@ -1,0 +1,12 @@
+{
+  "name": "@saorsa/ngx-core",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^14.0.0",
+    "@angular/core": "^14.0.0",
+    "@angular/material": "^14.0.4"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}
