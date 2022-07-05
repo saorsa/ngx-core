@@ -1,0 +1,18 @@
+<mat-toolbar [color]="color">
+  <span>{{title}}</span>
+  <span class="ngx-flex-spacer"></span>
+  <mat-button-toggle-group [formControl]="inspectModeControl" (change)="onToggleInspectMode($event)">
+    <mat-button-toggle value="raw" aria-label="Raw preview" matTooltip="Toggle raw preview">
+      <mat-icon>raw_on</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="hierarchical" aria-label="Hierarchical preview"
+      matTooltip="Toggle hierarchical preview">
+      <mat-icon>account_tree</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</mat-toolbar>
+
+{{inspectModeControl.value}}
+{{inspectMode}}
+{{data}}
+

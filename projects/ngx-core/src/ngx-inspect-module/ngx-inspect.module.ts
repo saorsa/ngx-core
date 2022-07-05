@@ -10,6 +10,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatCardModule} from "@angular/material/card";
 import {NgxConfigModule, NgxConfigService} from "../ngx-config-module";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -18,8 +20,10 @@ import {NgxConfigModule, NgxConfigService} from "../ngx-config-module";
     InspectButtonComponent
   ],
   imports: [
+    ReactiveFormsModule,
     NgxConfigModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatIconModule,
     MatTooltipModule,
     MatToolbarModule,
