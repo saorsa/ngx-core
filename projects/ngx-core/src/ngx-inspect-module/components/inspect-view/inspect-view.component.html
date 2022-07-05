@@ -6,13 +6,13 @@
       <mat-icon>raw_on</mat-icon>
     </mat-button-toggle>
     <mat-button-toggle value="hierarchical" aria-label="Hierarchical preview"
-      matTooltip="Toggle hierarchical preview">
+                       matTooltip="Toggle hierarchical preview">
       <mat-icon>account_tree</mat-icon>
     </mat-button-toggle>
   </mat-button-toggle-group>
 </mat-toolbar>
-
-{{inspectModeControl.value}}
-{{inspectMode}}
-{{data}}
-
+<div>
+  <div *ngIf="data && inspectMode === 'raw'">
+    <pre>{{data | json}}</pre>
+  </div>
+</div>
