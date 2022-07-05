@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
+import {CopyPasteService} from "../../../ngx-core/src/ngx-utils";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ngx-core-demo';
+
+  constructor(
+    readonly cp: CopyPasteService,
+  ) {
+  }
+
+  copyElementValue(elementRef: HTMLElement): void {
+    this.cp.copyElementContents(elementRef);
+  }
 }

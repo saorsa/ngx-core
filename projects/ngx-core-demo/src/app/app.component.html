@@ -3,10 +3,47 @@
   <saorsa-ng-inspect-view [data]="{ title: 'Hello World', answer: 42, pi: 3.15 }">
 
   </saorsa-ng-inspect-view>
+
+  <saorsa-ng-inspect-view [data]="{ title: 'Hello World', answer: 42, pi: 3.15, nested: { ref: 12, name: 'Atanas', array: [1, 2, 3, 4]} }">
+
+  </saorsa-ng-inspect-view>
+
+  <saorsa-ng-inspect-view [data]="null">
+
+  </saorsa-ng-inspect-view>
+
+  <saorsa-ng-inspect-view [data]="undefined">
+
+  </saorsa-ng-inspect-view>
+
+  <saorsa-ng-inspect-view [data]="42">
+
+  </saorsa-ng-inspect-view>
+
+  <saorsa-ng-inspect-view [data]="false">
+
+  </saorsa-ng-inspect-view>
+
+  <saorsa-ng-inspect-view [data]="'string'">
+
+  </saorsa-ng-inspect-view>
+
+  <saorsa-ng-inspect-view [data]="[ 1, 2, 3, 4, 5 , 'x']">
+
+  </saorsa-ng-inspect-view>
 </div>
 <h2>Button</h2>
 <div>
   <saorsa-ng-inspect-button>
 
   </saorsa-ng-inspect-button>
+</div>
+<div>
+  <h2>Copy / Paste</h2>
+  <pre #xxx>
+    Ala bala 42, 32746 adshahjgda
+  </pre>
+  <button (click)="copyElementValue(xxx)">
+    Copy
+  </button>
 </div>

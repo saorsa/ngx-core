@@ -1,0 +1,38 @@
+<span [ngSwitch]="inspectType">
+  <span *ngSwitchCase="'undefined'">
+    undefined
+  </span>
+  <span *ngSwitchCase="'null'">
+    null
+  </span>
+  <span *ngSwitchCase="'boolean'">
+    {{data | json}}
+  </span>
+  <span *ngSwitchCase="'number'">
+    {{data | json}}
+  </span>
+  <span *ngSwitchCase="'string'">
+    {{data | json}}
+  </span>
+  <span *ngSwitchCase="'object'">
+    <div *ngFor="let prop of propertyKeys">
+      - {{prop}} :
+      <span class="p-2">
+        <saorsa-ngx-inspect-tree-view [data]="getPropertyValue(prop)"
+                                      [depth]="depth + 1"></saorsa-ngx-inspect-tree-view>
+      </span>
+    </div>
+  </span>
+  <span *ngSwitchCase="'array'">
+    <div *ngFor="let prop of propertyKeys">
+      - {{prop}} :
+      <span class="p-2">
+        <saorsa-ngx-inspect-tree-view [data]="getPropertyValue(prop)"
+                                      [depth]="depth + 1"></saorsa-ngx-inspect-tree-view>
+      </span>
+    </div>
+  </span>
+  <span *ngSwitchDefault>
+    {{inspectType}}
+  </span>
+</span>

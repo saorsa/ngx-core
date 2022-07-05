@@ -1,7 +1,13 @@
 <mat-toolbar [color]="color">
+  <mat-icon *ngIf="iconName">{{iconName}}</mat-icon>
   <span>{{title}}</span>
   <span class="ngx-flex-spacer"></span>
-  <mat-button-toggle-group [formControl]="inspectModeControl" (change)="onToggleInspectMode($event)">
+  <button mat-icon-button (click)="copyRaw()" class="me-3"
+    matTooltip="Copy JSON representation">
+    <mat-icon>content_copy</mat-icon>
+  </button>
+  <mat-button-toggle-group
+    [formControl]="inspectModeControl" (change)="onToggleInspectMode($event)">
     <mat-button-toggle value="raw" aria-label="Raw preview" matTooltip="Toggle raw preview">
       <mat-icon>raw_on</mat-icon>
     </mat-button-toggle>
@@ -11,8 +17,13 @@
     </mat-button-toggle>
   </mat-button-toggle-group>
 </mat-toolbar>
-<div>
-  <div *ngIf="data && inspectMode === 'raw'">
-    <pre>{{data | json}}</pre>
+<div class="p-2">
+  <div *ngIf="inspectMode === 'raw'" class="raw-preview-container"
+    matTooltip="Copy JSON representation"
+    (click)="copyElementContents(dataJsonPreview)">
+    <pre #dataJsonPreview>{{data | json}}</pre>
+  </div>
+  <div *ngIf="inspectMode === 'hierarchical'">
+    <saorsa-ngx-inspect-tree-view [data]="data"></saorsa-ngx-inspect-tree-view>
   </div>
 </div>
