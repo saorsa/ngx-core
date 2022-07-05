@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NgxInspectService} from "../../services/ngx-inspect.service";
 
 @Component({
   selector: 'saorsa-ng-inspect-button',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InspectButtonComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private readonly inspectService: NgxInspectService
+  ) { }
 
   ngOnInit(): void {
   }

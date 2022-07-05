@@ -12,7 +12,7 @@
       },
       "root": "projects/ngx-core",
       "sourceRoot": "projects/ngx-core/src",
-      "prefix": "saorsa-ng",
+      "prefix": "saorsa-ngx",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
