@@ -1,4 +1,5 @@
 @import "~bootstrap/scss/bootstrap"
+@import "../../ngx-core/src/ngx-core"
 
 .mat-button-toggle-group
   height: 32px
@@ -7,12 +8,14 @@
 .ngx-flex-spacer
   flex: 1 1 auto
 
-.raw-preview-container
+.preview-container
   max-height: 450px
   overflow: scroll
+
+.raw-preview-container
+  @extend .preview-container
   &:hover
-    background: rgba(25, 100, 240, 0.1)
-    font-size: larger
+    background: $hover-background
   pre
     font-family: "Courier New", monospace
     margin: 0

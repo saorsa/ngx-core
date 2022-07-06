@@ -1,20 +1,20 @@
 <span [ngSwitch]="inspectType">
-  <span *ngSwitchCase="'undefined'">
+  <span *ngSwitchCase="'undefined'" class="atom-undefined">
     undefined
   </span>
-  <span *ngSwitchCase="'null'">
+  <span *ngSwitchCase="'null'" class="atom-null">
     null
   </span>
-  <span *ngSwitchCase="'function'">
+  <span *ngSwitchCase="'function'" class="atom-function">
     function
   </span>
-  <span *ngSwitchCase="'boolean'">
+  <span *ngSwitchCase="'boolean'" class="atom-boolean">
     {{data | json}}
   </span>
-  <span *ngSwitchCase="'number'">
+  <span *ngSwitchCase="'number'" class="atom-number">
     {{data | json}}
   </span>
-  <span *ngSwitchCase="'string'">
+  <span *ngSwitchCase="'string'" class="atom-string">
     {{data | json}}
   </span>
   <div *ngSwitchCase="'object'" [ngClass]="{ 'ps-4': depth > 0}">
@@ -29,24 +29,30 @@
 </span>
 
 <ng-template #arrayOrObjectTemplate>
-  <div *ngFor="let prop of propertyKeys">
-    <mat-icon class="me-2">{{getPropertyIconName(prop)}}</mat-icon>
-    <span class="property-key">{{prop}}</span> :
+  <div *ngFor="let prop of propertyKeys" class="property-node"
+    (click)="copyNode(prop); $event.stopPropagation()"
+    (mouseenter)="handleMouseOver(true)"
+    (mouseleave)="handleMouseOver(false)">
+    <span class="property-key">{{prop}}</span>
+    <span *ngIf="isArrayOrObject(prop)" class="property-actions">
+      <span *ngIf="!areChildrenCollapsedForKey(prop)"
+            (click)="collapseChildrenForKey(prop); $event.stopPropagation()">
+        <mat-icon>close_fullscreen</mat-icon>
+      </span>
+      <span *ngIf="areChildrenCollapsedForKey(prop)"
+            (click)="expandChildrenForKey(prop); $event.stopPropagation()">
+        <mat-icon *ngIf="isChildObject(prop)">data_object</mat-icon>
+        <mat-icon *ngIf="isChildArray(prop)">data_array</mat-icon>
+      </span>
+    </span>
+    <span *ngIf="!areChildrenCollapsedForKey(prop)"> : </span>
     <span class="property-value">
-        <span *ngIf="isArrayOrObject(prop)">
-          <button mat-icon-button *ngIf="!areChildrenCollapsedForKey(prop)" matTooltip="Collapse"
-                  (click)="collapseChildrenForKey(prop)">
-            <mat-icon>unfold_less</mat-icon>
-          </button>
-          <button mat-icon-button *ngIf="areChildrenCollapsedForKey(prop)" matTooltip="Expand"
-                  (click)="expandChildrenForKey(prop)">
-            <mat-icon>unfold_more</mat-icon>
-          </button>
-        </span>
-        <saorsa-ngx-inspect-tree-view *ngIf="!childrenCollapsedStates[prop]"
-                                      [toggle$]="toggle$"
-                                      [data]="getPropertyValue(prop)"
-                                      [depth]="depth + 1"></saorsa-ngx-inspect-tree-view>
+        <saorsa-ngx-inspect-tree-view *ngIf="!isArrayOrObject(prop) || !childrenCollapsedStates[prop]"
+          (onMouseOver)="handleChildMouseOver($event)"
+          [keyPath]="keyPath + '.' + prop"
+          [toggle$]="toggle$"
+          [data]="getPropertyValue(prop)"
+          [depth]="depth + 1"></saorsa-ngx-inspect-tree-view>
       </span>
   </div>
 </ng-template>

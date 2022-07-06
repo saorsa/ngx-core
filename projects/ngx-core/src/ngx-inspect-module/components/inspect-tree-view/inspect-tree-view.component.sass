@@ -1,4 +1,5 @@
 @import "~bootstrap/scss/bootstrap"
+@import "../../ngx-core/src/ngx-core"
 
 mat-icon
   vertical-align: middle
@@ -10,3 +11,29 @@ mat-icon
 
 .property-value
   font-family: 'Courier New', monospace
+
+.property-node
+  &:hover
+    background: $hover-background
+
+.property-actions
+  &:hover
+    font-weight: bold
+
+.atom-null
+  color: $color-null
+
+.atom-undefined
+  color: $color-undefined
+
+.atom-boolean
+  color: $color-boolean
+
+.atom-number
+  color: $color-number
+
+.atom-string
+  color: $color-string
+
+.atom-function
+  color: $color-function

@@ -3,16 +3,16 @@
   <span>{{title}}</span>
   <span class="ngx-flex-spacer"></span>
   <button *ngIf="inspectMode === 'hierarchical'"
-    mat-icon-button (click)="expandCollapse.next('expand')" class="me-3"
-    matTooltip="Expand hierarchy in depth">
-    <mat-icon>unfold_more</mat-icon>
+    mat-icon-button (click)="expandCollapse.next('expand')" class="me-1"
+    matTooltip="Expand all">
+    <mat-icon>open_in_full</mat-icon>
   </button>
   <button *ngIf="inspectMode === 'hierarchical'"
-          mat-icon-button (click)="expandCollapse.next('collapse')" class="me-3"
-          matTooltip="Collapse hierarchy in depth">
-    <mat-icon>unfold_less</mat-icon>
+          mat-icon-button (click)="expandCollapse.next('collapse')" class="me-1"
+          matTooltip="Collapse all">
+    <mat-icon>close_fullscreen</mat-icon>
   </button>
-  <button mat-icon-button (click)="copyRaw()" class="me-3"
+  <button mat-icon-button (click)="copyRaw()" class="me-2"
     matTooltip="Copy JSON representation">
     <mat-icon>content_copy</mat-icon>
   </button>
@@ -28,12 +28,10 @@
   </mat-button-toggle-group>
 </mat-toolbar>
 <div class="p-2">
-  <div *ngIf="inspectMode === 'raw'" class="raw-preview-container"
-    matTooltip="Copy JSON representation"
-    (click)="copyElementContents(dataJsonPreview)">
+  <div *ngIf="inspectMode === 'raw'" class="raw-preview-container">
     <pre #dataJsonPreview>{{data | json}}</pre>
   </div>
-  <div *ngIf="inspectMode === 'hierarchical'">
+  <div *ngIf="inspectMode === 'hierarchical'" class="preview-container">
     <saorsa-ngx-inspect-tree-view
       [toggle$]="expandCollapse"
       [data]="data"></saorsa-ngx-inspect-tree-view>

@@ -1,9 +1,11 @@
 import {
-  Component, Input, OnDestroy, OnInit
+  Component, EventEmitter, Input, OnDestroy, OnInit, Output
 } from '@angular/core';
 import {NgxInspectService} from "../../services/ngx-inspect.service";
 import {NgxInspectType, SimpleDictionary} from "../../ngx-inspect.model";
 import {Subject, Subscription} from "rxjs";
+import {CopyPasteService} from "../../../ngx-utils";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'saorsa-ngx-inspect-tree-view',
@@ -12,13 +14,15 @@ import {Subject, Subscription} from "rxjs";
 })
 export class InspectTreeViewComponent implements OnInit, OnDestroy {
 
+  @Input() keyPath: string = "";
   @Input() data: any = null;
   @Input() depth: number = 0;
   @Input() toggle$: Subject<'collapse' | 'expand'> = new Subject<'collapse' | 'expand'>();
+  @Output() onMouseOver = new EventEmitter<boolean>();
 
   protected toggleSubscription?: Subscription;
-
   readonly childrenCollapsedStates: SimpleDictionary<boolean> = {};
+  isDeepestHover = false;
 
   get isUndefined(): boolean {
     return this.data === undefined;
@@ -94,12 +98,10 @@ export class InspectTreeViewComponent implements OnInit, OnDestroy {
   }
 
   expandChildrenForKey(key: string): void {
-    console.warn('EXPAND CALLED', key);
     this.childrenCollapsedStates[key] = false;
   }
 
   collapseChildrenForKey(key: string): void {
-    console.warn('COLLAPSE CALLED', key);
     this.childrenCollapsedStates[key] = true;
   }
 
@@ -108,8 +110,18 @@ export class InspectTreeViewComponent implements OnInit, OnDestroy {
     return val ?? false;
   }
 
+  isChildArray(key: string): boolean {
+    return this.getPropertyInspectType(key) === 'array';
+  }
+
+  isChildObject(key: string): boolean {
+    return this.getPropertyInspectType(key) === 'object';
+  }
+
   constructor(
     readonly inspectService: NgxInspectService,
+    readonly copyPaste: CopyPasteService,
+    readonly snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -124,7 +136,45 @@ export class InspectTreeViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.warn('unsubscribe for', this.data);
     this.toggleSubscription?.unsubscribe();
+  }
+
+  copyNode(key: string): void {
+    const nodeJson = JSON.stringify(this.data[key]);
+    this.copyPaste.copyText(nodeJson)
+      .subscribe({
+        next: () => {
+          this.snackBar.open(
+            `Contents for key [${this.keyPath}.${key}] copied successfully`,
+            'Dismiss', {
+              duration: 1200,
+              verticalPosition: "top",
+              horizontalPosition: "center",
+              politeness: "polite",
+            }
+          )
+        },
+        error: (error) => {
+          console.error('Failed to copy paste JSON data', nodeJson, error);
+          this.snackBar.open(
+            `Failed copy contents for key [${this.keyPath}.${key}] to document navigator.`,
+            'Dismiss', {
+              duration: 6000,
+              verticalPosition: "top",
+              horizontalPosition: "center",
+              politeness: "assertive",
+            }
+          );
+        }
+      });
+  }
+
+  handleMouseOver(isHover: boolean): void {
+    this.isDeepestHover = isHover;
+    this.onMouseOver.emit(isHover);
+  }
+
+  handleChildMouseOver(isChildHover: boolean): void {
+    this.isDeepestHover = !isChildHover;
   }
 }
