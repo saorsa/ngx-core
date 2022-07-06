@@ -2,8 +2,7 @@ import {
   Component, Input, OnInit
 } from '@angular/core';
 import {NgxInspectService} from "../../services/ngx-inspect.service";
-import {NgxInspectType} from "../../ngx-inspect.model";
-
+import {NgxInspectStructuredState, NgxInspectType} from "../../ngx-inspect.model";
 
 @Component({
   selector: 'saorsa-ngx-inspect-tree-view',
@@ -14,6 +13,9 @@ export class InspectTreeViewComponent implements OnInit {
 
   @Input() data: any = null;
   @Input() depth: number = 0;
+  @Input() structureOverride: NgxInspectStructuredState = 'mixed';
+
+  internalStructuredState: NgxInspectStructuredState = 'mixed';
 
   get isUndefined(): boolean {
     return this.data === undefined;
@@ -58,6 +60,43 @@ export class InspectTreeViewComponent implements OnInit {
     if (this.isObject) {
       return this.data[key];
     }
+    throw new Error(
+      `Invalid usage. The current data is nighter an array, nor an object. Key = ${key}, Data = ${this.data}`);
+  }
+
+  getPropertyInspectType(key: string): NgxInspectType {
+    const propertyValue = this.getPropertyValue(key);
+    return this.inspectService.getInspectType(propertyValue);
+  }
+
+  getPropertyIconName(key: string): string {
+    const inspectType = this.getPropertyInspectType(key);
+    switch (inspectType){
+      case 'null': return 'block';
+      case 'undefined': return 'block';
+      case 'boolean': return 'check';
+      case 'number': return '123';
+      case 'string': return 'subject';
+      case 'function': return 'functions';
+      case 'array': return 'data_array';
+      case 'object': return 'data_object';
+      case 'unknown': return 'question_mark';
+      default: return 'question_mark';
+    }
+  }
+
+  isArrayOrObject(key: string): boolean {
+    const value = this.getPropertyValue(key);
+    return this.inspectService.isArrayOrObject(value);
+  }
+
+  setStructuredState(state: NgxInspectStructuredState): void {
+    if (this.internalStructuredState !== state) {
+      this.internalStructuredState = state;
+    }
+    if (this.internalStructuredState != this.structureOverride) {
+      this.structureOverride = 'mixed';
+    }
   }
 
   constructor(
@@ -66,5 +105,4 @@ export class InspectTreeViewComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

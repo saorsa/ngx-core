@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NgxInspectMode} from "../../ngx-inspect.model";
+import {NgxInspectMode, NgxInspectStructuredState} from "../../ngx-inspect.model";
 import {NgxInspectService} from "../../services/ngx-inspect.service";
 import {ThemePalette} from "@angular/material/core";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
@@ -25,6 +25,8 @@ export class InspectViewComponent implements OnInit, OnDestroy {
   @Input() title: string = 'Inspect Object';
   @Input() data: any = null;
   @Input() inspectMode: NgxInspectMode = this.inspectService.inspectMode;
+
+  structuredState: NgxInspectStructuredState = 'mixed';
 
   @ViewChild('dataJsonPreview') dataJsonPreviewElement?: ElementRef;
 

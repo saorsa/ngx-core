@@ -5,6 +5,9 @@
   <span *ngSwitchCase="'null'">
     null
   </span>
+  <span *ngSwitchCase="'function'">
+    function
+  </span>
   <span *ngSwitchCase="'boolean'">
     {{data | json}}
   </span>
@@ -14,25 +17,52 @@
   <span *ngSwitchCase="'string'">
     {{data | json}}
   </span>
-  <span *ngSwitchCase="'object'">
+  <div *ngSwitchCase="'object'" [ngClass]="{ 'ps-4': depth > 0}">
     <div *ngFor="let prop of propertyKeys">
-      - {{prop}} :
-      <span class="p-2">
-        <saorsa-ngx-inspect-tree-view [data]="getPropertyValue(prop)"
-                                      [depth]="depth + 1"></saorsa-ngx-inspect-tree-view>
+      <mat-icon class="me-2">{{getPropertyIconName(prop)}}</mat-icon>
+      <span class="property-key">{{prop}}</span> :
+      <span class="property-value">
+        <span *ngIf="isArrayOrObject(prop)">
+          <button mat-icon-button *ngIf="internalStructuredState !== 'collapsed'"
+                  (click)="setStructuredState('collapsed')">
+            <mat-icon>unfold_less</mat-icon>
+          </button>
+          <button mat-icon-button *ngIf="structureOverride !== 'expanded'"
+                  (click)="setStructuredState('expanded')">
+            <mat-icon>unfold_more</mat-icon>
+          </button>
+        </span>
+        <saorsa-ngx-inspect-tree-view *ngIf="internalStructuredState !== 'collapsed'"
+          [structureOverride]="structureOverride"
+          [data]="getPropertyValue(prop)"
+          [depth]="depth + 1"></saorsa-ngx-inspect-tree-view>
       </span>
     </div>
-  </span>
-  <span *ngSwitchCase="'array'">
+  </div>
+  <div *ngSwitchCase="'array'" [ngClass]="{ 'ps-4': depth > 0}">
     <div *ngFor="let prop of propertyKeys">
-      - {{prop}} :
-      <span class="p-2">
-        <saorsa-ngx-inspect-tree-view [data]="getPropertyValue(prop)"
-                                      [depth]="depth + 1"></saorsa-ngx-inspect-tree-view>
+      <mat-icon class="me-2">{{getPropertyIconName(prop)}}</mat-icon>
+      <span class="property-key">{{prop}}</span> :
+      <span class="property-value">
+        <span *ngIf="isArrayOrObject(prop)">
+          <button mat-icon-button *ngIf="internalStructuredState !== 'collapsed'"
+                  (click)="setStructuredState('collapsed')">
+            <mat-icon>unfold_less</mat-icon>
+          </button>
+          <button mat-icon-button *ngIf="internalStructuredState !== 'expanded'"
+                  (click)="setStructuredState('expanded')">
+            <mat-icon>unfold_more</mat-icon>
+          </button>
+        </span>
+        <saorsa-ngx-inspect-tree-view *ngIf="internalStructuredState !== 'collapsed'"
+          [structureOverride]="structureOverride"
+          [data]="getPropertyValue(prop)"
+          [depth]="depth + 1"></saorsa-ngx-inspect-tree-view>
       </span>
     </div>
-  </span>
+  </div>
   <span *ngSwitchDefault>
     {{inspectType}}
   </span>
 </span>
+<i>{{structureOverride}} / {{internalStructuredState}}</i>

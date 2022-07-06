@@ -79,6 +79,10 @@ export class NgxInspectService {
     return !Array.isArray(arg) && typeof arg === 'object';
   }
 
+  isArrayOrObject(arg: any): boolean {
+    return this.isArray(arg) || this.isObject(arg);
+  }
+
   getInspectType(arg: any | null): NgxInspectType {
     if (arg === null) {
       return 'null';

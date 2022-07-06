@@ -11,6 +11,10 @@ export type NgxInspectType = 'undefined'
   | 'function'
   | 'unknown';
 
+export type NgxInspectStructuredState = 'expanded'
+  | 'collapsed'
+  | 'mixed';
+
 export interface NgxInspectConfig {
   enabled?: boolean;
   mode?: NgxInspectMode;
