@@ -1,21 +1,24 @@
 import {
-  Component, Input, OnInit
+  Component, Input, OnDestroy, OnInit
 } from '@angular/core';
 import {NgxInspectService} from "../../services/ngx-inspect.service";
-import {NgxInspectStructuredState, NgxInspectType} from "../../ngx-inspect.model";
+import {NgxInspectType, SimpleDictionary} from "../../ngx-inspect.model";
+import {Subject, Subscription} from "rxjs";
 
 @Component({
   selector: 'saorsa-ngx-inspect-tree-view',
   templateUrl: './inspect-tree-view.component.html',
   styleUrls: ['./inspect-tree-view.component.sass']
 })
-export class InspectTreeViewComponent implements OnInit {
+export class InspectTreeViewComponent implements OnInit, OnDestroy {
 
   @Input() data: any = null;
   @Input() depth: number = 0;
-  @Input() structureOverride: NgxInspectStructuredState = 'mixed';
+  @Input() toggle$: Subject<'collapse' | 'expand'> = new Subject<'collapse' | 'expand'>();
 
-  internalStructuredState: NgxInspectStructuredState = 'mixed';
+  protected toggleSubscription?: Subscription;
+
+  readonly childrenCollapsedStates: SimpleDictionary<boolean> = {};
 
   get isUndefined(): boolean {
     return this.data === undefined;
@@ -90,13 +93,19 @@ export class InspectTreeViewComponent implements OnInit {
     return this.inspectService.isArrayOrObject(value);
   }
 
-  setStructuredState(state: NgxInspectStructuredState): void {
-    if (this.internalStructuredState !== state) {
-      this.internalStructuredState = state;
-    }
-    if (this.internalStructuredState != this.structureOverride) {
-      this.structureOverride = 'mixed';
-    }
+  expandChildrenForKey(key: string): void {
+    console.warn('EXPAND CALLED', key);
+    this.childrenCollapsedStates[key] = false;
+  }
+
+  collapseChildrenForKey(key: string): void {
+    console.warn('COLLAPSE CALLED', key);
+    this.childrenCollapsedStates[key] = true;
+  }
+
+  areChildrenCollapsedForKey(key: string): boolean {
+    const val = this.childrenCollapsedStates[key];
+    return val ?? false;
   }
 
   constructor(
@@ -104,5 +113,18 @@ export class InspectTreeViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.toggleSubscription = this.toggle$.subscribe(t => {
+      const collapsedState = (t === 'collapse');
+      if (this.inspectService.isArrayOrObject(this.data)) {
+        this.propertyKeys.forEach(key => {
+          this.childrenCollapsedStates[key] = collapsedState;
+        });
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    console.warn('unsubscribe for', this.data);
+    this.toggleSubscription?.unsubscribe();
   }
 }

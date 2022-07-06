@@ -3,12 +3,12 @@
   <span>{{title}}</span>
   <span class="ngx-flex-spacer"></span>
   <button *ngIf="inspectMode === 'hierarchical'"
-    mat-icon-button (click)="structuredState = 'expanded'" class="me-3"
+    mat-icon-button (click)="expandCollapse.next('expand')" class="me-3"
     matTooltip="Expand hierarchy in depth">
     <mat-icon>unfold_more</mat-icon>
   </button>
   <button *ngIf="inspectMode === 'hierarchical'"
-          mat-icon-button (click)="structuredState = 'collapsed'" class="me-3"
+          mat-icon-button (click)="expandCollapse.next('collapse')" class="me-3"
           matTooltip="Collapse hierarchy in depth">
     <mat-icon>unfold_less</mat-icon>
   </button>
@@ -35,7 +35,7 @@
   </div>
   <div *ngIf="inspectMode === 'hierarchical'">
     <saorsa-ngx-inspect-tree-view
-      [structureOverride]="structuredState"
+      [toggle$]="expandCollapse"
       [data]="data"></saorsa-ngx-inspect-tree-view>
   </div>
 </div>

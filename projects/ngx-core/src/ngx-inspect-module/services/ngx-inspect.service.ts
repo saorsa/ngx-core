@@ -80,6 +80,7 @@ export class NgxInspectService {
   }
 
   isArrayOrObject(arg: any): boolean {
+    if (arg == null) return false;
     return this.isArray(arg) || this.isObject(arg);
   }
 

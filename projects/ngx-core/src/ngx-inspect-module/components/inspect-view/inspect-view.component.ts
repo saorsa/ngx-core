@@ -1,11 +1,12 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NgxInspectMode, NgxInspectStructuredState} from "../../ngx-inspect.model";
+import {NgxInspectMode} from "../../ngx-inspect.model";
 import {NgxInspectService} from "../../services/ngx-inspect.service";
 import {ThemePalette} from "@angular/material/core";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {CopyPasteService} from "../../../ngx-utils";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import { Subject } from 'rxjs';
 
 
 export interface InspectViewComponentConfig {
@@ -26,7 +27,7 @@ export class InspectViewComponent implements OnInit, OnDestroy {
   @Input() data: any = null;
   @Input() inspectMode: NgxInspectMode = this.inspectService.inspectMode;
 
-  structuredState: NgxInspectStructuredState = 'mixed';
+  readonly expandCollapse: Subject<'collapse' | 'expand'> = new Subject<"collapse" | "expand">();
 
   @ViewChild('dataJsonPreview') dataJsonPreviewElement?: ElementRef;
 
