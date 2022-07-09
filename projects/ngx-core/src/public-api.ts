@@ -2,5 +2,7 @@
  * Public API Surface of ngx-core-components
  */
 
-export * from './ngx-config-module';
-export * from './ngx-inspect-module/index';
+export * from './ngx-core.model';
+export * from './ngx-core-utils';
+export * from './ngx-config';
+export * from './ngx-inspect';

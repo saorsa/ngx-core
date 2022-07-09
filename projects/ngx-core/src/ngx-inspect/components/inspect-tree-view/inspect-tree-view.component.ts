@@ -2,10 +2,11 @@ import {
   Component, EventEmitter, Input, OnDestroy, OnInit, Output
 } from '@angular/core';
 import {NgxInspectService} from "../../services/ngx-inspect.service";
-import {NgxInspectType, SimpleDictionary} from "../../ngx-inspect.model";
+import {NgxInspectType} from "../../ngx-inspect.model";
 import {Subject, Subscription} from "rxjs";
-import {CopyPasteService} from "../../../ngx-utils";
+import {NgxCopyPasteService} from "../../../ngx-core-utils";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Dictionary} from "../../../ngx-core.model";
 
 @Component({
   selector: 'saorsa-ngx-inspect-tree-view',
@@ -21,7 +22,7 @@ export class InspectTreeViewComponent implements OnInit, OnDestroy {
   @Output() onMouseOver = new EventEmitter<boolean>();
 
   protected toggleSubscription?: Subscription;
-  readonly childrenCollapsedStates: SimpleDictionary<boolean> = {};
+  readonly childrenCollapsedStates: Dictionary<boolean> = {};
   isDeepestHover = false;
 
   get isUndefined(): boolean {
@@ -120,7 +121,7 @@ export class InspectTreeViewComponent implements OnInit, OnDestroy {
 
   constructor(
     readonly inspectService: NgxInspectService,
-    readonly copyPaste: CopyPasteService,
+    readonly copyPaste: NgxCopyPasteService,
     readonly snackBar: MatSnackBar,
   ) { }
 

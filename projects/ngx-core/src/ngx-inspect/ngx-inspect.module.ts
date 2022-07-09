@@ -9,13 +9,14 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatCardModule} from "@angular/material/card";
-import {NgxConfigModule, NgxConfigService} from "../ngx-config-module";
+import {NgxConfigModule, NgxConfigService} from "../ngx-config";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {NgxUtilsModule} from "../ngx-utils";
+import {NgxCoreUtilsModule} from "../ngx-core-utils";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { InspectTreeViewComponent } from './components/inspect-tree-view/inspect-tree-view.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { InspectTreeViewComponent } from './components/inspect-tree-view/inspect
     imports: [
       CommonModule,
       ReactiveFormsModule,
-      NgxUtilsModule,
+      NgxCoreUtilsModule,
       NgxConfigModule,
       MatButtonModule,
       MatButtonToggleModule,
@@ -38,7 +39,8 @@ import { InspectTreeViewComponent } from './components/inspect-tree-view/inspect
       MatSelectModule,
       MatAutocompleteModule,
       MatCardModule,
-      MatSnackBarModule
+      MatSnackBarModule,
+      MatDialogModule,
     ],
   exports: [
     InspectViewComponent,

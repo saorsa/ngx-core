@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 
 import { NgxInspectModule } from 'ngx-core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {NgxUtilsModule} from "../../../ngx-core/src/ngx-utils";
+import {NgxCoreUtilsModule} from "../../../ngx-core/src/ngx-core-utils";
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import {NgxUtilsModule} from "../../../ngx-core/src/ngx-utils";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgxUtilsModule,
+    NgxCoreUtilsModule,
     NgxInspectModule,
     BrowserAnimationsModule,
   ],

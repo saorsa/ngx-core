@@ -1,24 +1,14 @@
 <h2>Inspect View</h2>
 <div>
-  <saorsa-ng-inspect-view [data]="{ title: 'Hello World', truth: true,
-  lie: false, nullRef: null, undefinedRef: undefined, answer: 42, pi: 3.15,
-  nested: { ref: 12, name: 'Atanas',
-  array: [1, 2, 3, 4, { x: 42, y: 'Sample', z: 3.12 }],
-  array2: [ 'one', true, 1341, {
-    'x': 123,
-    'y': 3424.3,
-    'z': 754,
-    'r': undefined,
-    'f': copyElementValue
-  }]
-  }}">
+  <saorsa-ng-inspect-view [data]="data">
 
   </saorsa-ng-inspect-view>
 </div>
 <h2>Button</h2>
 <div>
-  <saorsa-ng-inspect-button>
-
+  <saorsa-ng-inspect-button
+    [title]="'Debug'"
+    [data]="data">
   </saorsa-ng-inspect-button>
 </div>
 <div>
@@ -30,3 +20,4 @@
     Copy
   </button>
 </div>
+

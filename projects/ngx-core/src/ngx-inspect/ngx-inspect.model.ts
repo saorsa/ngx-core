@@ -16,6 +16,3 @@ export interface NgxInspectConfig {
   mode?: NgxInspectMode;
 }
 
-export interface SimpleDictionary<TValue> {
-  [Key: string]: TValue;
-}

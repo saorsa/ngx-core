@@ -4,7 +4,7 @@ import {NgxInspectService} from "../../services/ngx-inspect.service";
 import {ThemePalette} from "@angular/material/core";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {CopyPasteService} from "../../../ngx-utils";
+import {NgxCopyPasteService} from "../../../ngx-core-utils";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import { Subject } from 'rxjs';
 
@@ -40,7 +40,7 @@ export class InspectViewComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    readonly copyPaste: CopyPasteService,
+    readonly copyPaste: NgxCopyPasteService,
     readonly inspectService: NgxInspectService,
     readonly formBuilder: FormBuilder,
     readonly snackBar: MatSnackBar,

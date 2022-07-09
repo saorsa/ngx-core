@@ -1,0 +1,14 @@
+<button mat-raised-button
+        (click)="matDialog.open(templateRef, { panelClass: 'inspect-dialog-container'})"
+  [color]="color">
+  <mat-icon *ngIf="iconName">{{iconName}}</mat-icon>
+  {{title}}
+</button>
+<ng-template #templateRef>
+  <saorsa-ng-inspect-view [color]="color" [data]="data"></saorsa-ng-inspect-view>
+  <mat-card-actions class="float-end p-2">
+    <button mat-raised-button color="primary" [mat-dialog-close]="null">
+      Dismiss
+    </button>
+  </mat-card-actions>
+</ng-template>

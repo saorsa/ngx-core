@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {NgxConfigService} from "../../ngx-config-module";
+import {NgxConfigService} from "../../ngx-config";
 import {NgxInspectConfig, NgxInspectMode, NgxInspectType} from "../ngx-inspect.model";
 import {Subject} from "rxjs";
 
